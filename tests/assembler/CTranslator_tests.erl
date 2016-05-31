@@ -66,6 +66,7 @@ translate_calc_test_() ->
         ?_assertBinaryEqual("0001101", Translate("!D")),
         ?_assertBinaryEqual("0001111", Translate("-D")),
         ?_assertBinaryEqual("0011111", Translate("D+1")),
+        ?_assertBinaryEqual("0011111", Translate("1+D")),
         ?_assertBinaryEqual("0001110", Translate("D-1")),
 
         %% ARegister
@@ -73,24 +74,34 @@ translate_calc_test_() ->
         ?_assertBinaryEqual("0110001", Translate("!A")),
         ?_assertBinaryEqual("0110011", Translate("-A")),
         ?_assertBinaryEqual("0110111", Translate("A+1")),
+        ?_assertBinaryEqual("0110111", Translate("1+A")),
         ?_assertBinaryEqual("0110010", Translate("A-1")),
 
         %% DRegister / ARegister
         ?_assertBinaryEqual("0000010", Translate("D+A")),
+        ?_assertBinaryEqual("0000010", Translate("A+D")),
         ?_assertBinaryEqual("0010011", Translate("D-A")),
+        ?_assertBinaryEqual("0000111", Translate("A-D")),
         ?_assertBinaryEqual("0000000", Translate("D&A")),
+        ?_assertBinaryEqual("0000000", Translate("A&D")),
         ?_assertBinaryEqual("0010101", Translate("D|A")),
+        ?_assertBinaryEqual("0010101", Translate("A|D")),
 
         %% Memory
         ?_assertBinaryEqual("1110000", Translate("M")),
         ?_assertBinaryEqual("1110001", Translate("!M")),
         ?_assertBinaryEqual("1110011", Translate("-M")),
         ?_assertBinaryEqual("1110111", Translate("M+1")),
+        ?_assertBinaryEqual("1110111", Translate("1+M")),
         ?_assertBinaryEqual("1110010", Translate("M-1")),
 
         %% DRegister / Memory
         ?_assertBinaryEqual("1000010", Translate("D+M")),
+        ?_assertBinaryEqual("1000010", Translate("M+D")),
         ?_assertBinaryEqual("1010011", Translate("D-M")),
+        ?_assertBinaryEqual("1000111", Translate("M-D")),
         ?_assertBinaryEqual("1000000", Translate("D&M")),
-        ?_assertBinaryEqual("1010101", Translate("D|M"))
+        ?_assertBinaryEqual("1000000", Translate("M&D")),
+        ?_assertBinaryEqual("1010101", Translate("D|M")),
+        ?_assertBinaryEqual("1010101", Translate("M|D"))
     ].

@@ -57,10 +57,16 @@ translate_calc(operation, "!A") -> "110001";
 translate_calc(operation, "-D") -> "001111";
 translate_calc(operation, "-A") -> "110011";
 translate_calc(operation, "D+1") -> "011111";
+translate_calc(operation, "1+D") -> "011111";
 translate_calc(operation, "A+1") -> "110111";
+translate_calc(operation, "1+A") -> "110111";
 translate_calc(operation, "D-1") -> "001110";
 translate_calc(operation, "A-1") -> "110010";
 translate_calc(operation, "D+A") -> "000010";
+translate_calc(operation, "A+D") -> "000010";
 translate_calc(operation, "D-A") -> "010011";
+translate_calc(operation, "A-D") -> "000111";
 translate_calc(operation, "D&A") -> "000000";
-translate_calc(operation, "D|A") -> "010101".
+translate_calc(operation, "A&D") -> "000000";
+translate_calc(operation, "D|A") -> "010101";
+translate_calc(operation, "A|D") -> "010101".
