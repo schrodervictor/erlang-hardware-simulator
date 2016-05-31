@@ -1,3 +1,4 @@
+DEBUG_FLAG =
 BUILD_DIR = ebin
 BUILD_TESTS = etests
 
@@ -12,8 +13,13 @@ vpath %_tests.erl tests/simple:tests/simple8:tests/simple16
 vpath %.erl src/simple:src/simple8:src/simple16
 vpath %.beam $(BUILD_DIR):$(BUILD_TESTS)
 
-.PHONY: all compile clean test build_dir
+.PHONY: all debug compile clean test build_dir
 all: compile test
+
+debug: DEBUG_FLAG=+debug_info
+debug: compile test
+	erl -pa $(BUILD_DIR) -sname bm-config -eval \
+		"debugger:start(),'Nand':chip(1, 1)."
 
 compile: build_dir
 compile: $(objects)
@@ -34,7 +40,7 @@ test: $(test_objects)
 $(objects) $(test_objects): %: %.beam
 
 %_tests.beam: %_tests.erl
-	erlc -o $(BUILD_TESTS)/ $?
+	erlc $(DEBUG_FLAG) -o $(BUILD_TESTS)/ $?
 
 %.beam: %.erl
-	erlc -o $(BUILD_DIR)/ $?
+	erlc $(DEBUG_FLAG) -o $(BUILD_DIR)/ $?
