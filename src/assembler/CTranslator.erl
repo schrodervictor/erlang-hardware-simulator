@@ -1,5 +1,5 @@
 -module('CTranslator').
--export([translate/1, tokenize/1, translate_dest/1]).
+-export([translate/1, tokenize/1, translate_dest/1, translate_jump/1]).
 
 translate(_Instruction) -> {error, not_implemented}.
 
@@ -24,3 +24,12 @@ translate_dest([], Result) -> Result;
 translate_dest([$A|Tail], [_,D,M]) -> translate_dest(Tail, [$1,D,M]);
 translate_dest([$D|Tail], [A,_,M]) -> translate_dest(Tail, [A,$1,M]);
 translate_dest([$M|Tail], [A,D,_]) -> translate_dest(Tail, [A,D,$1]).
+
+translate_jump("") -> "000";
+translate_jump("JGT") -> "001";
+translate_jump("JEQ") -> "010";
+translate_jump("JGE") -> "011";
+translate_jump("JLT") -> "100";
+translate_jump("JNE") -> "101";
+translate_jump("JLE") -> "110";
+translate_jump("JMP") -> "111".

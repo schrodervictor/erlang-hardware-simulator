@@ -39,3 +39,16 @@ translate_dest_test_() ->
         ?_assertBinaryEqual("111", Translate("DAM")),
         ?_assertBinaryEqual("111", Translate("DMA"))
     ].
+
+translate_jump_test_() ->
+    Translate = fun 'CTranslator':translate_jump/1,
+    [
+        ?_assertBinaryEqual("000", Translate("")),
+        ?_assertBinaryEqual("001", Translate("JGT")),
+        ?_assertBinaryEqual("010", Translate("JEQ")),
+        ?_assertBinaryEqual("011", Translate("JGE")),
+        ?_assertBinaryEqual("100", Translate("JLT")),
+        ?_assertBinaryEqual("101", Translate("JNE")),
+        ?_assertBinaryEqual("110", Translate("JLE")),
+        ?_assertBinaryEqual("111", Translate("JMP"))
+    ].
