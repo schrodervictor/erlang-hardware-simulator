@@ -4,7 +4,12 @@
     translate_calc/1
 ]).
 
-translate(_Instruction) -> {error, not_implemented}.
+translate(Instruction) ->
+    {ok, {Dest, Calc, Jump}} = tokenize(Instruction),
+    "111" ++
+        translate_calc(Calc) ++
+        translate_dest(Dest) ++
+        translate_jump(Jump).
 
 tokenize(Instruction) ->
     Check = fun(Char) -> string:chr(Instruction, Char) end,

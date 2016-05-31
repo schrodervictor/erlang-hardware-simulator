@@ -6,6 +6,16 @@
      ?_assertEqual(iolist_to_binary(Expected), iolist_to_binary(Actual))
 ).
 
+translate_test_() ->
+    Translate = fun 'CTranslator':translate/1,
+    [
+        ?_assertBinaryEqual("1111110111010000", Translate("D=M+1")),
+        ?_assertBinaryEqual("1110110111010000", Translate("D=A+1")),
+        ?_assertBinaryEqual("1110110010000001", Translate("A-1;JGT")),
+        ?_assertBinaryEqual("1110110010011101", Translate("DM=A-1;JNE")),
+        ?_assertBinaryEqual("1110101010000111", Translate("0;JMP"))
+    ].
+
 tokenize_test_() ->
     Tokenize = fun 'CTranslator':tokenize/1,
     [
