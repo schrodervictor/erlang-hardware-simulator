@@ -3,7 +3,7 @@ BUILD_TESTS = etests
 
 simple = Nand Not And Or Xor Mux DMux DMux4Way DMux8Way
 simple8 = Or8Way
-simple16 = And16 Or16 Not16
+simple16 = And16 Or16 Not16 Mux16
 
 objects = $(simple) $(simple8) $(simple16)
 test_objects = $(addsuffix _tests,$(objects))
