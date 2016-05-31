@@ -1,7 +1,7 @@
 BUILD_DIR = ebin
 
-objects = Nand
-test_objects = Nand_tests
+objects = Nand Not And Or
+test_objects = $(addsuffix _tests,$(objects))
 
 vpath %_tests.erl tests/simple
 vpath %.erl src/simple
