@@ -52,3 +52,45 @@ translate_jump_test_() ->
         ?_assertBinaryEqual("110", Translate("JLE")),
         ?_assertBinaryEqual("111", Translate("JMP"))
     ].
+
+translate_calc_test_() ->
+    Translate = fun 'CTranslator':translate_calc/1,
+    [
+        %% Constants
+        ?_assertBinaryEqual("0101010", Translate("0")),
+        ?_assertBinaryEqual("0111111", Translate("1")),
+        ?_assertBinaryEqual("0111010", Translate("-1")),
+
+        %% DRegister
+        ?_assertBinaryEqual("0001100", Translate("D")),
+        ?_assertBinaryEqual("0001101", Translate("!D")),
+        ?_assertBinaryEqual("0001111", Translate("-D")),
+        ?_assertBinaryEqual("0011111", Translate("D+1")),
+        ?_assertBinaryEqual("0001110", Translate("D-1")),
+
+        %% ARegister
+        ?_assertBinaryEqual("0110000", Translate("A")),
+        ?_assertBinaryEqual("0110001", Translate("!A")),
+        ?_assertBinaryEqual("0110011", Translate("-A")),
+        ?_assertBinaryEqual("0110111", Translate("A+1")),
+        ?_assertBinaryEqual("0110010", Translate("A-1")),
+
+        %% DRegister / ARegister
+        ?_assertBinaryEqual("0000010", Translate("D+A")),
+        ?_assertBinaryEqual("0010011", Translate("D-A")),
+        ?_assertBinaryEqual("0000000", Translate("D&A")),
+        ?_assertBinaryEqual("0010101", Translate("D|A")),
+
+        %% Memory
+        ?_assertBinaryEqual("1110000", Translate("M")),
+        ?_assertBinaryEqual("1110001", Translate("!M")),
+        ?_assertBinaryEqual("1110011", Translate("-M")),
+        ?_assertBinaryEqual("1110111", Translate("M+1")),
+        ?_assertBinaryEqual("1110010", Translate("M-1")),
+
+        %% DRegister / Memory
+        ?_assertBinaryEqual("1000010", Translate("D+M")),
+        ?_assertBinaryEqual("1010011", Translate("D-M")),
+        ?_assertBinaryEqual("1000000", Translate("D&M")),
+        ?_assertBinaryEqual("1010101", Translate("D|M"))
+    ].
