@@ -7,11 +7,17 @@
 ).
 
 translate_test_() ->
-    {setup, fun translate_setup/0, fun translate_handles_numeric/1}.
+    {setup,
+        fun translate_setup/0,
+        fun(SetupData) -> [
+            translate_handles_numeric(SetupData),
+            translate_handles_labeled_existent(SetupData)
+        ] end
+    }.
 
 translate_setup() ->
     ATranslate = fun 'ATranslator':translate/2,
-    SymbolTable = dict:from_list([]),
+    SymbolTable = dict:from_list([{"LOOP", 10}]),
     {ATranslate, SymbolTable}.
 
 translate_handles_numeric({ATranslate, SymbolTable}) ->
@@ -25,4 +31,11 @@ translate_handles_numeric({ATranslate, SymbolTable}) ->
         ?_assertEqual(SymbolTable, SymbolTable1),
         ?_assertBinaryEqual("0111111111111111", Result2),
         ?_assertEqual(SymbolTable, SymbolTable2)
+    ].
+
+translate_handles_labeled_existent({ATranslate, SymbolTable}) ->
+    {ok, {Result0, SymbolTable0}} = ATranslate("@LOOP", SymbolTable),
+    [
+        ?_assertBinaryEqual("0000000000001010", Result0),
+        ?_assertEqual(SymbolTable, SymbolTable0)
     ].
