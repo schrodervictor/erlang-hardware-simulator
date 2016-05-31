@@ -6,7 +6,7 @@ simple = Nand Not And Or Xor Mux DMux DMux4Way DMux8Way
 simple8 = Or8Way
 simple16 = And16 Or16 Mux16 Not16 Mux4Way16 Mux8Way16
 ALU = HalfAdder FullAdder Add16 Inc16 ALU
-clocked = DFF Bit Register
+clocked = DFF Bit Register RAM8 RAM64 RAM512 RAM4K
 
 objects = $(simple) $(simple8) $(simple16) $(ALU) $(clocked)
 test_objects = $(addsuffix _tests,$(objects))
