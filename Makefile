@@ -1,6 +1,6 @@
 BUILD_DIR = ebin
 
-objects = Nand Not And Or Xor Mux DMux
+objects = Nand Not And Or Xor Mux DMux DMux4Way DMux8Way
 test_objects = $(addsuffix _tests,$(objects))
 
 vpath %_tests.erl tests/simple
