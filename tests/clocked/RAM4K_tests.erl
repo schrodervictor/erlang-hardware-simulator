@@ -1,7 +1,9 @@
 -module('RAM4K_tests').
 -include_lib("eunit/include/eunit.hrl").
 
-chip_test() ->
+chip_test_() -> {timeout, 20, fun memory_check/0}.
+
+memory_check() ->
     RAM4K = 'RAM4K':create(),
     Zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     One = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
