@@ -1,11 +1,13 @@
 BUILD_DIR = ebin
 BUILD_TESTS = etests
 
-objects = Nand Not And Or Xor Mux DMux DMux4Way DMux8Way
+simple = Nand Not And Or Xor Mux DMux DMux4Way DMux8Way
+simple8 = Or8Way
+objects = $(simple) $(simple8)
 test_objects = $(addsuffix _tests,$(objects))
 
-vpath %_tests.erl tests/simple
-vpath %.erl src/simple
+vpath %_tests.erl tests/simple:tests/simple8
+vpath %.erl src/simple:src/simple8
 vpath %.beam $(BUILD_DIR):$(BUILD_TESTS)
 
 .PHONY: all compile clean test build_dir
