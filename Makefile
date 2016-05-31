@@ -5,7 +5,7 @@ BUILD_TESTS = etests
 simple = Nand Not And Or Xor Mux DMux DMux4Way DMux8Way
 simple8 = Or8Way
 simple16 = And16 Or16 Mux16 Not16 Mux4Way16 Mux8Way16
-ALU = HalfAdder
+ALU = HalfAdder FullAdder
 
 objects = $(simple) $(simple8) $(simple16) $(ALU)
 test_objects = $(addsuffix _tests,$(objects))
