@@ -6,12 +6,13 @@ simple = Nand Not And Or Xor Mux DMux DMux4Way DMux8Way
 simple8 = Or8Way
 simple16 = And16 Or16 Mux16 Not16 Mux4Way16 Mux8Way16
 ALU = HalfAdder FullAdder Add16 Inc16 ALU
+clocked = DFF
 
-objects = $(simple) $(simple8) $(simple16) $(ALU)
+objects = $(simple) $(simple8) $(simple16) $(ALU) $(clocked)
 test_objects = $(addsuffix _tests,$(objects))
 
-vpath %_tests.erl tests/simple:tests/simple8:tests/simple16:tests/ALU
-vpath %.erl src/simple:src/simple8:src/simple16:src/ALU
+vpath %_tests.erl tests/simple:tests/simple8:tests/simple16:tests/ALU:tests/clocked
+vpath %.erl src/simple:src/simple8:src/simple16:src/ALU:src/clocked
 vpath %.beam $(BUILD_DIR):$(BUILD_TESTS)
 
 .PHONY: all debug compile clean test build_dir
