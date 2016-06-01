@@ -1,0 +1,21 @@
+@3
+D=A
+(BEGIN)
+    @4
+    M=D+1
+    @counter
+    M=D
+    @MAIN_LOOP
+    0;JMP
+(MAIN_LOOP)
+    @counter
+    M=M+1
+    @10
+    D=A
+    @BEGIN
+    D;JGT
+(END)
+    @counter
+    M=0
+    @END
+    0;JMP
