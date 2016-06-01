@@ -2,7 +2,8 @@
 -export([is_white_line/1, strip_comments/1]).
 
 is_white_line(Line) ->
-    CleanLine = string:tokens(Line, " 	"),
+    WithoutComments = strip_comments(Line),
+    CleanLine = string:tokens(WithoutComments, " 	"),
     0 =:= length(CleanLine).
 
 strip_comments(Line) ->

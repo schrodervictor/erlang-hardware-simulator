@@ -12,7 +12,7 @@ is_white_line_test_() ->
         ?_assert(IsWhitespace("")),
         ?_assert(IsWhitespace("      ")),
         ?_assert(IsWhitespace("	")),
-        %?_assert(IsWhitespace("// Something with comments")),
+        ?_assert(IsWhitespace("// Something with comments")),
 
         ?_assertNot(IsWhitespace("(SOME_LABEL)")),
         ?_assertNot(IsWhitespace("@variable")),
