@@ -12,4 +12,5 @@ strip_comments(Line) ->
         CommentStart -> string:sub_string(Line, 1, CommentStart - 1)
     end.
 
-strip_all_white_space(Line) -> string:tokens(Line, " 	").
+strip_all_white_space(Line) ->
+    lists:flatten(string:tokens(Line, " 	")).

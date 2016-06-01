@@ -32,9 +32,9 @@ strip_comments_test_() ->
 strip_all_white_space_test_() ->
     StripWS = fun 'WhiteSpaceParser':strip_all_white_space/1,
     [
-        ?_assertBinaryEqual("", StripWS("    ")),
-        ?_assertBinaryEqual("", StripWS("					")),
-        ?_assertBinaryEqual("", StripWS("")),
-        ?_assertBinaryEqual("@234", StripWS("	@234  ")),
-        ?_assertBinaryEqual("MD=A+1;JMP", StripWS("	M D = A + 1 ; JMP   "))
+        ?_assertEqual("", StripWS("    ")),
+        ?_assertEqual("", StripWS("					")),
+        ?_assertEqual("", StripWS("")),
+        ?_assertEqual("@234", StripWS("	@234  ")),
+        ?_assertEqual("MD=A+1;JMP", StripWS("	M D = A + 1 ; JMP   "))
     ].
