@@ -1,10 +1,6 @@
 -module('LabelParser_tests').
 -include_lib("eunit/include/eunit.hrl").
-
--define(
-     fixture(Filename),
-     filename:join([filename:dirname(?FILE), "../_fixtures", Filename])
-).
+-include("test-macros.hrl").
 
 populate_symbols_test_() ->
     Populate = fun 'LabelParser':populate_symbols/2,

@@ -1,6 +1,7 @@
 DEBUG_FLAG =
 BUILD_DIR = ebin
 BUILD_TESTS = etests
+INCLUDE_DIR = include
 
 simple = Nand Not And Or Xor Mux DMux DMux4Way DMux8Way
 simple8 = Or8Way
@@ -43,7 +44,7 @@ test: $(test_objects)
 $(objects) $(test_objects): %: %.beam
 
 %_tests.beam: %_tests.erl
-	erlc $(DEBUG_FLAG) -o $(BUILD_TESTS)/ $?
+	erlc $(DEBUG_FLAG) -o $(BUILD_TESTS)/ -I $(INCLUDE_DIR) $?
 
 %.beam: %.erl
 	erlc $(DEBUG_FLAG) -o $(BUILD_DIR)/ $?

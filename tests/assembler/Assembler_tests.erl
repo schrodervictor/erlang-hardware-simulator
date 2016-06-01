@@ -1,17 +1,6 @@
 -module('Assembler_tests').
 -include_lib("eunit/include/eunit.hrl").
-
--define(
-     fixture(Filename),
-     filename:join([filename:dirname(?FILE), "../_fixtures", Filename])
-).
-
--define(assertFileExists(Filename), ?assert(filelib:is_regular(Filename))).
-
--define(
-     assertBinaryEqual(Expected, Actual),
-     ?assertEqual(iolist_to_binary(Expected), iolist_to_binary(Actual))
-).
+-include("test-macros.hrl").
 
 compile_test() ->
     FixtureFilename = ?fixture("clean-with-labels.asm"),
