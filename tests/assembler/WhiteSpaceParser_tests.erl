@@ -19,3 +19,12 @@ is_white_line_test_() ->
         ?_assertNot(IsWhitespace("@12345")),
         ?_assertNot(IsWhitespace("D=M+1"))
     ].
+
+strip_comments_test_() ->
+    StripComments = fun 'WhiteSpaceParser':strip_comments/1,
+    [
+        ?_assertEqual("", StripComments("// Some comments")),
+        ?_assertEqual("    ", StripComments("    // Some comments")),
+        ?_assertEqual("	", StripComments("	// Some comments")),
+        ?_assertEqual("  @234  ", StripComments("  @234  // Some comments"))
+    ].
