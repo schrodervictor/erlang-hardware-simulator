@@ -1,9 +1,11 @@
 -module('WhiteSpaceParser').
--export([is_white_line/1, strip_comments/1, strip_all_white_space/1]).
+-export([
+    is_white_line/1, strip_comments/1, strip_all_white_space/1, clean_line/1
+]).
 
 is_white_line(Line) ->
     WithoutComments = strip_comments(Line),
-    CleanLine = string:tokens(WithoutComments, " 	"),
+    CleanLine = strip_all_white_space(WithoutComments),
     0 =:= length(CleanLine).
 
 strip_comments(Line) ->
@@ -14,3 +16,6 @@ strip_comments(Line) ->
 
 strip_all_white_space(Line) ->
     lists:flatten(string:tokens(Line, " 	")).
+
+clean_line(Line) ->
+    strip_comments(strip_all_white_space(Line)).
