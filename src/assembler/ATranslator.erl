@@ -4,19 +4,19 @@
 translate("@" ++ Address, SymbolTable) ->
     case string:to_integer(Address) of
         {error, no_integer} ->
-            {ok, symbolToBinary(Address, SymbolTable)};
+            {ok, translate_symbol(Address, SymbolTable)};
         {Num, _} ->
-            {ok, {integerToBinary(Num), SymbolTable}}
+            {ok, {translate_numeric(Num), SymbolTable}}
     end.
 
-integerToBinary(Num) -> io_lib:format("~16..0s", [integer_to_list(Num, 2)]).
+translate_numeric(Num) -> io_lib:format("~16..0s", [integer_to_list(Num, 2)]).
 
-symbolToBinary(Label, SymbolTable) ->
+translate_symbol(Label, SymbolTable) ->
     case dict:find(Label, SymbolTable) of
-        {ok, Value} -> {integerToBinary(Value), SymbolTable};
+        {ok, Value} -> {translate_numeric(Value), SymbolTable};
         _ ->
             UpdatedTable = allocate_symbol(Label, SymbolTable),
-            symbolToBinary(Label, UpdatedTable)
+            translate_symbol(Label, UpdatedTable)
     end.
 
 allocate_symbol(Label, SymbolTable) ->
