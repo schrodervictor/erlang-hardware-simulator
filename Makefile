@@ -12,8 +12,8 @@ assembler = ATranslator CTranslator LabelParser WhiteSpaceParser
 objects = $(simple) $(simple8) $(simple16) $(ALU) $(clocked) $(assembler)
 test_objects = $(addsuffix _tests,$(objects))
 
-vpath %_tests.erl tests/simple:tests/simple8:tests/simple16:tests/ALU:tests/clocked:tests/assembler
-vpath %.erl src/simple:src/simple8:src/simple16:src/ALU:src/clocked:src/assembler
+vpath %_tests.erl $(wildcard tests/*)
+vpath %.erl $(wildcard src/*)
 vpath %.beam $(BUILD_DIR):$(BUILD_TESTS)
 
 .PHONY: all debug compile clean test build_dir
