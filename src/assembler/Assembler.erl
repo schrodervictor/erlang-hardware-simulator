@@ -33,14 +33,12 @@ compile_line("", SymbolTable, _Output) -> {ok, SymbolTable};
 compile_line("(" ++ _, SymbolTable, _Output) -> {ok, SymbolTable};
 
 compile_line("@" ++ _ = Line, SymbolTable, Output) ->
-    ATranslator = fun 'ATranslator':translate/2,
-    {ok, {Compiled, UpdatedSymbolTable}} =
-        ATranslator(Line, SymbolTable),
-    io:fwrite(Output, "~s~n", [Compiled]),
-    {ok, UpdatedSymbolTable};
+    compile_with(fun 'ATranslator':translate/2, Line, SymbolTable, Output);
 
 compile_line(Line, SymbolTable, Output) ->
-    CTranslator = fun 'CTranslator':translate/1,
-    Compiled = CTranslator(Line),
+    compile_with(fun 'CTranslator':translate/2, Line, SymbolTable, Output).
+
+compile_with(Translator, Line, SymbolTable, Output) ->
+    {ok, {Compiled, UpdatedSymbolTable}} = Translator(Line, SymbolTable),
     io:fwrite(Output, "~s~n", [Compiled]),
-    {ok, SymbolTable}
+    {ok, UpdatedSymbolTable}.

@@ -1,15 +1,16 @@
 -module('CTranslator').
 -export([
-    translate/1, tokenize/1, translate_dest/1, translate_jump/1,
+    translate/2, tokenize/1, translate_dest/1, translate_jump/1,
     translate_calc/1
 ]).
 
-translate(Instruction) ->
+translate(Instruction, SymbolTable) ->
     {ok, {Dest, Calc, Jump}} = tokenize(Instruction),
-    "111" ++
+    Result = "111" ++
         translate_calc(Calc) ++
         translate_dest(Dest) ++
-        translate_jump(Jump).
+        translate_jump(Jump),
+    {ok, {Result, SymbolTable}}.
 
 tokenize(Instruction) ->
     Check = fun(Char) -> string:chr(Instruction, Char) end,

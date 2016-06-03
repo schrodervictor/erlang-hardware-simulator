@@ -3,13 +3,24 @@
 -include("test-macros.hrl").
 
 translate_test_() ->
-    Translate = fun 'CTranslator':translate/1,
+    Translate = fun 'CTranslator':translate/2,
+    SymbolTable = dict:from_list([]),
+    {ok, {Comp0, UpdatedSymbolTable0}} = Translate("D=M+1", SymbolTable),
+    {ok, {Comp1, UpdatedSymbolTable1}} = Translate("D=A+1", SymbolTable),
+    {ok, {Comp2, UpdatedSymbolTable2}} = Translate("A-1;JGT", SymbolTable),
+    {ok, {Comp3, UpdatedSymbolTable3}} = Translate("DM=A-1;JNE", SymbolTable),
+    {ok, {Comp4, UpdatedSymbolTable4}} = Translate("0;JMP", SymbolTable),
     [
-        ?_assertBinaryEqual("1111110111010000", Translate("D=M+1")),
-        ?_assertBinaryEqual("1110110111010000", Translate("D=A+1")),
-        ?_assertBinaryEqual("1110110010000001", Translate("A-1;JGT")),
-        ?_assertBinaryEqual("1110110010011101", Translate("DM=A-1;JNE")),
-        ?_assertBinaryEqual("1110101010000111", Translate("0;JMP"))
+        ?_assertBinaryEqual("1111110111010000", Comp0),
+        ?_assertEqual(SymbolTable, UpdatedSymbolTable0),
+        ?_assertBinaryEqual("1110110111010000", Comp1),
+        ?_assertEqual(SymbolTable, UpdatedSymbolTable1),
+        ?_assertBinaryEqual("1110110010000001", Comp2),
+        ?_assertEqual(SymbolTable, UpdatedSymbolTable2),
+        ?_assertBinaryEqual("1110110010011101", Comp3),
+        ?_assertEqual(SymbolTable, UpdatedSymbolTable3),
+        ?_assertBinaryEqual("1110101010000111", Comp4),
+        ?_assertEqual(SymbolTable, UpdatedSymbolTable4)
     ].
 
 tokenize_test_() ->
