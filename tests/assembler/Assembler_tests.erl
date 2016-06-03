@@ -2,27 +2,25 @@
 -include_lib("eunit/include/eunit.hrl").
 -include("test-macros.hrl").
 
-compile_test() ->
-    FixtureFilename = ?fixture("clean-with-labels.asm"),
-    OutputFilename = ?fixture("clean-with-labels.hack"),
-    ComparisonFilename = ?fixture("clean-with-labels.expected"),
+compile_test_() ->
+    FixtureFile0 = ?fixture("simple.asm"),
+    OutputFile0 = ?fixture("simple.hack"),
 
-    ok = 'Assembler':compile(FixtureFilename),
+    FixtureFile1 = ?fixture("simple-with-labels-and-vars.asm"),
+    OutputFile1 = ?fixture("simple-with-labels-and-vars.hack"),
 
-    ?assertFileExists(OutputFilename),
+    ComparisonFile = ?fixture("simple.expected"),
+    [
+        try_compilation(FixtureFile0, OutputFile0, ComparisonFile),
+        try_compilation(FixtureFile1, OutputFile1, ComparisonFile)
+    ].
 
-    {ok, Comparison} = file:open(ComparisonFilename, read),
-    {ok, Output} = file:open(OutputFilename, read),
-
-    compare_files(Comparison, Output).
-
-compare_files(Comparison, Output) ->
-    ExpectedLine = io:get_line(Comparison, ""),
-    ResultLine = io:get_line(Output, ""),
-    case ExpectedLine of
-        eof ->
-            ?assertEqual(ExpectedLine, ResultLine);
-        _ ->
-            ?assertBinaryEqual(ExpectedLine, ResultLine),
-            compare_files(Comparison, Output)
-    end.
+try_compilation(FixtureFile, OutputFile, ComparisonFile) ->
+    file:delete(OutputFile),
+    ok = 'Assembler':compile(FixtureFile),
+    {ok, Comparison} = file:read_file(ComparisonFile),
+    {ok, Output} = file:read_file(OutputFile),
+    [
+        ?_assertFileExists(OutputFile),
+        ?_assertEqual(Comparison, Output)
+    ].

@@ -3,13 +3,16 @@
 -include("test-macros.hrl").
 
 populate_symbols_test_() ->
-    Populate = fun 'LabelParser':populate_symbols/2,
-    FixtureFile = ?fixture("clean-with-labels.asm"),
+    FixtureFile = ?fixture("simple-with-labels-and-vars.asm"),
     SymbolTable = dict:from_list([
         {"__next__", 16},
         {"R0", 0},
         {"SCREEN", 24576}
     ]),
+    check_symbol_populator(SymbolTable, FixtureFile0).
+
+check_symbol_populator(SymbolTable, FixtureFile) ->
+    Populate = fun 'LabelParser':populate_symbols/2,
     UpdatedSymbolTable = Populate(SymbolTable, FixtureFile),
     [
         ?_assertEqual({ok, 2}, dict:find("BEGIN", UpdatedSymbolTable)),

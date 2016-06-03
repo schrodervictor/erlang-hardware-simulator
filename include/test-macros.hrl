@@ -4,6 +4,7 @@
 ).
 
 -define(assertFileExists(Filename), ?assert(filelib:is_regular(Filename))).
+-define(_assertFileExists(Filename), ?_assert(filelib:is_regular(Filename))).
 
 -define(
      assertBinaryEqual(Expected, Actual),
