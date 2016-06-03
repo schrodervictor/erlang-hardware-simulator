@@ -23,9 +23,8 @@ compile(Input, Output, SymbolTable) ->
     case io:get_line(Input, "") of
         eof -> ok;
         Line ->
-            TrimLine = string:strip(Line, both, $\n),
             {ok, UpdatedSymbolTable} =
-                compile_line(TrimLine, SymbolTable, Output),
+                compile_line(Line, SymbolTable, Output),
             compile(Input, Output, UpdatedSymbolTable)
     end.
 
@@ -34,6 +33,8 @@ compile_line(Line, SymbolTable, Output) ->
     CTranslator = fun 'CTranslator':translate/1,
     CleanLine = 'WhiteSpaceParser':clean_line(Line),
     case string:substr(CleanLine, 1, 1) of
+        "" ->
+            {ok, SymbolTable};
         "@" ->
             {ok, {Compiled, UpdatedSymbolTable}} =
                 ATranslator(CleanLine, SymbolTable),

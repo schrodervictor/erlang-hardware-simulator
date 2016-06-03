@@ -9,10 +9,14 @@ compile_test_() ->
     FixtureFile1 = ?fixture("simple-with-labels-and-vars.asm"),
     OutputFile1 = ?fixture("simple-with-labels-and-vars.hack"),
 
+    FixtureFile2 = ?fixture("simple-with-comments-and-whitespace.asm"),
+    OutputFile2 = ?fixture("simple-with-comments-and-whitespace.hack"),
+
     ComparisonFile = ?fixture("simple.expected"),
     [
         try_compilation(FixtureFile0, OutputFile0, ComparisonFile),
-        try_compilation(FixtureFile1, OutputFile1, ComparisonFile)
+        try_compilation(FixtureFile1, OutputFile1, ComparisonFile),
+        try_compilation(FixtureFile2, OutputFile2, ComparisonFile)
     ].
 
 try_compilation(FixtureFile, OutputFile, ComparisonFile) ->

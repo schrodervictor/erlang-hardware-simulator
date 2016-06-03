@@ -15,7 +15,7 @@ strip_comments(Line) ->
     end.
 
 strip_all_white_space(Line) ->
-    lists:flatten(string:tokens(Line, " 	")).
+    lists:flatten(string:tokens(Line, " 	\n")).
 
 clean_line(Line) ->
     strip_comments(strip_all_white_space(Line)).
