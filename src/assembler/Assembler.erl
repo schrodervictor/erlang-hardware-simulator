@@ -23,27 +23,24 @@ compile(Input, Output, SymbolTable) ->
     case io:get_line(Input, "") of
         eof -> ok;
         Line ->
+            CleanLine = 'WhiteSpaceParser':clean_line(Line),
             {ok, UpdatedSymbolTable} =
-                compile_line(Line, SymbolTable, Output),
+                compile_line(CleanLine, SymbolTable, Output),
             compile(Input, Output, UpdatedSymbolTable)
     end.
 
-compile_line(Line, SymbolTable, Output) ->
+compile_line("", SymbolTable, _Output) -> {ok, SymbolTable};
+compile_line("(" ++ _, SymbolTable, _Output) -> {ok, SymbolTable};
+
+compile_line("@" ++ _ = Line, SymbolTable, Output) ->
     ATranslator = fun 'ATranslator':translate/2,
+    {ok, {Compiled, UpdatedSymbolTable}} =
+        ATranslator(Line, SymbolTable),
+    io:fwrite(Output, "~s~n", [Compiled]),
+    {ok, UpdatedSymbolTable};
+
+compile_line(Line, SymbolTable, Output) ->
     CTranslator = fun 'CTranslator':translate/1,
-    CleanLine = 'WhiteSpaceParser':clean_line(Line),
-    case string:substr(CleanLine, 1, 1) of
-        "" ->
-            {ok, SymbolTable};
-        "@" ->
-            {ok, {Compiled, UpdatedSymbolTable}} =
-                ATranslator(CleanLine, SymbolTable),
-            io:fwrite(Output, "~s~n", [Compiled]),
-            {ok, UpdatedSymbolTable};
-        "(" ->
-            {ok, SymbolTable};
-        _ ->
-            Compiled = CTranslator(CleanLine),
-            io:fwrite(Output, "~s~n", [Compiled]),
-            {ok, SymbolTable}
-    end.
+    Compiled = CTranslator(Line),
+    io:fwrite(Output, "~s~n", [Compiled]),
+    {ok, SymbolTable}
