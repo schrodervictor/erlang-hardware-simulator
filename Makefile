@@ -12,6 +12,7 @@ assembler = ATranslator CTranslator LabelParser WhiteSpaceParser Assembler
 
 objects = $(simple) $(simple8) $(simple16) $(ALU) $(clocked) $(assembler)
 test_objects = $(addsuffix _tests,$(objects))
+include_objects = $(wildcard $(INCLUDE_DIR)/*.hrl)
 
 vpath %_tests.erl $(wildcard tests/*)
 vpath %.erl $(wildcard src/*)
@@ -43,8 +44,8 @@ test: $(test_objects)
 .PHONY: $(objects) $(test_objects)
 $(objects) $(test_objects): %: %.beam
 
-%_tests.beam: %_tests.erl
-	erlc $(DEBUG_FLAG) -o $(BUILD_TESTS)/ -I $(INCLUDE_DIR) $?
+%_tests.beam: %_tests.erl $(include_objects)
+	erlc $(DEBUG_FLAG) -o $(BUILD_TESTS)/ -I $(INCLUDE_DIR) $<
 
 %.beam: %.erl
 	erlc $(DEBUG_FLAG) -o $(BUILD_DIR)/ $?
