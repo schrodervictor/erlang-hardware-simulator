@@ -23,7 +23,7 @@ all: compile test
 
 debug: DEBUG_FLAG=+debug_info
 debug: compile test
-	erl -pa $(BUILD_DIR) -sname bm-config -eval \
+	erl -pa $(BUILD_DIR) -sname nand2tetris -eval \
 		"debugger:start(),'Nand':chip(1, 1)."
 
 compile: build_dir
@@ -37,9 +37,10 @@ clean:
 	rm -rf $(BUILD_DIR)
 	rm -rf $(BUILD_TESTS)
 
+test: TEST = {dir, "./$(BUILD_TESTS)"}
 test: $(test_objects)
 	erl -noshell -pa $(BUILD_DIR) -eval \
-		'eunit:test([{dir, "./$(BUILD_TESTS)"}], [verbose])' -s init stop
+		'eunit:test([$(TEST)], [verbose])' -s init stop
 
 .PHONY: $(objects) $(test_objects)
 $(objects) $(test_objects): %: %.beam
