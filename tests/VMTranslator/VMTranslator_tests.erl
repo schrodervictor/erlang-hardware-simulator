@@ -8,7 +8,8 @@ translation_test_() ->
         try_translation("pop"),
         try_translation("arithmetic"),
         try_translation("whitespace"),
-        try_translation("logic")
+        try_translation("logic"),
+        try_translation("comparison")
     ].
 
 try_translation(Basename) ->
