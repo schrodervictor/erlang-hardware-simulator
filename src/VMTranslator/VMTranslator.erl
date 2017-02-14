@@ -51,7 +51,11 @@ translate_tokens(["pop", Segment, Value|_], Basename) ->
 
 translate_tokens(["add"|_], _) -> 'VMArithmetic':translate(add);
 translate_tokens(["sub"|_], _) -> 'VMArithmetic':translate(sub);
-translate_tokens(["neg"|_], _) -> 'VMArithmetic':translate(neg).
+translate_tokens(["neg"|_], _) -> 'VMArithmetic':translate(neg);
+
+translate_tokens(["not"|_], _) -> 'VMLogic':translate('not');
+translate_tokens(["and"|_], _) -> 'VMLogic':translate('and');
+translate_tokens(["or"|_], _) -> 'VMLogic':translate('or').
 
 segment_code(local) -> "LCL";
 segment_code(argument) -> "ARG";

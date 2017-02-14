@@ -1,0 +1,8 @@
+push constant 0
+not
+push constant 8
+push constant 9
+and
+push constant 8
+push constant 2
+or
