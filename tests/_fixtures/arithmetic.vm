@@ -1,0 +1,6 @@
+push constant 20
+push constant 22
+add
+push constant 100
+sub
+neg

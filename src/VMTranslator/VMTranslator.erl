@@ -35,7 +35,11 @@ translate_tokens(["push", Segment, Value|_], Basename) ->
     'VMPush':translate(list_to_atom(Segment), Value, Basename);
 
 translate_tokens(["pop", Segment, Value|_], Basename) ->
-    'VMPop':translate(list_to_atom(Segment), Value, Basename).
+    'VMPop':translate(list_to_atom(Segment), Value, Basename);
+
+translate_tokens(["add"|_], _) -> 'VMArithmetic':translate(add);
+translate_tokens(["sub"|_], _) -> 'VMArithmetic':translate(sub);
+translate_tokens(["neg"|_], _) -> 'VMArithmetic':translate(neg).
 
 segment_code(local) -> "LCL";
 segment_code(argument) -> "ARG";

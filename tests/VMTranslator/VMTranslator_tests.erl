@@ -2,10 +2,11 @@
 -include_lib("eunit/include/eunit.hrl").
 -include("test-macros.hrl").
 
-compile_test_() ->
+translation_test_() ->
     [
         try_translation("push"),
-        try_translation("pop")
+        try_translation("pop"),
+        try_translation("arithmetic")
     ].
 
 try_translation(Basename) ->
