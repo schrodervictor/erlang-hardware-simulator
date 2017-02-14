@@ -1,0 +1,5 @@
+# output from VMTranslator tests
+/arithmetic.asm
+/pop.asm
+/push.asm
+/whitespace.asm
