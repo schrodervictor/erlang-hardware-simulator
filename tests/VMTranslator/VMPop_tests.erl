@@ -88,7 +88,7 @@ translate_test_() ->
         ||
         Mem <- MemorySegments
     ],
-    [?_assertEqual(expected(Mem), Code) || {Mem, {ok, Code}} <- Results].
+    [check_expectation(Result) || Result <- Results].
 
 translate_pointers_test_() ->
     Values = ["0", "1"],
@@ -97,4 +97,7 @@ translate_pointers_test_() ->
         ||
         V <- Values
     ],
-    [?_assertEqual(expected(Mem), Code) || {Mem, {ok, Code}} <- Results].
+    [check_expectation(Result) || Result <- Results].
+
+check_expectation({Mem, Result}) ->
+    ?_assertEqual({ok, expected(Mem)}, Result).
