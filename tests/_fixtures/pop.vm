@@ -1,0 +1,8 @@
+pop local 3
+pop argument 5
+pop this 42
+pop that 10
+pop static 34
+pop temp 8
+pop pointer 1
+pop pointer 0

@@ -4,7 +4,8 @@
 
 compile_test_() ->
     [
-        try_translation("push")
+        try_translation("push"),
+        try_translation("pop")
     ].
 
 try_translation(Basename) ->
