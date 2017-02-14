@@ -20,16 +20,28 @@ translate(Input, Output, Basename) ->
     case io:get_line(Input, "") of
         eof -> ok;
         Line ->
-            io:fwrite(Output, "// ~s", [Line]),
-            {ok, Translated} = translate_line(Line, Basename),
-            io:fwrite(Output, "~s~n", [Translated]),
+            write_translated_line(Output, Line, Basename),
             translate(Input, Output, Basename)
     end.
 
+write_translated_line(Output, Line, Basename) ->
+    case translate_line(Line, Basename) of
+        null -> ok;
+        comment ->
+            io:fwrite(Output, "~s", [Line]);
+        {ok, Assembly} ->
+            io:fwrite(Output, "// ~s", [Line]),
+            io:fwrite(Output, "~s~n", [Assembly])
+    end.
+
+
 translate_line(Line, Basename) ->
     Tokens = string:tokens(Line, " 	\n"),
-    {ok, Assembly} = translate_tokens(Tokens, Basename),
-    {ok, Assembly}.
+    translate_tokens(Tokens, Basename).
+
+translate_tokens("", _) -> null;
+
+translate_tokens(["//"|_], _) -> comment;
 
 translate_tokens(["push", Segment, Value|_], Basename) ->
     'VMPush':translate(list_to_atom(Segment), Value, Basename);

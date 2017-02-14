@@ -1,0 +1,14 @@
+
+
+// A file with some comments
+    // here and there
+
+push constant 42 // should not affect the translation
+
+// doesn't
+ // matter
+  // where
+   // they
+    // are
+
+push local 3

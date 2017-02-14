@@ -6,7 +6,8 @@ translation_test_() ->
     [
         try_translation("push"),
         try_translation("pop"),
-        try_translation("arithmetic")
+        try_translation("arithmetic"),
+        try_translation("whitespace")
     ].
 
 try_translation(Basename) ->
