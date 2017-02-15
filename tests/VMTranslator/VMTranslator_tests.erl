@@ -15,7 +15,7 @@ translation_test_() ->
 try_translation(Basename) ->
     FixtureFile = ?fixture(Basename ++ ".vm"),
     OutputFile = ?fixture(Basename ++ ".asm"),
-    ComparisonFile = ?fixture(Basename ++ ".asm.expected"),
+    ComparisonFile = ?fixture(Basename ++ ".expected.asm"),
 
     file:delete(OutputFile),
 
